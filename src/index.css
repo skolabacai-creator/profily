@@ -51,6 +51,8 @@ body {
   background-color: var(--color-warmblack);
   color: var(--color-mainhtml);
   font-family: "Noto Naskh Arabic", var(--font-sans);
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "lnum" on, "tnum" on;
   overflow-x: hidden;
   direction: rtl; /* RTL Support */
 }
