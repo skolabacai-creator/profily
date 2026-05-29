@@ -555,15 +555,44 @@ export default function AdminPanel({ onBackToSite }: AdminPanelProps) {
                       onChange={(e) => {
                         const file = e.target.files?.[0];
                         if (file) {
-                          if (file.size > 800 * 1024) { // 800 KB limit
-                            triggerNotification('حجم الصورة كبير جداً! يرجى اختيار صورة أقل من 800 كيلوبايت لضمان حفظها.', 'error');
-                            return;
-                          }
                           const reader = new FileReader();
                           reader.onload = (uploadEvent) => {
                             if (uploadEvent.target?.result) {
-                              setProjectForm(prev => ({ ...prev, imageUrl: uploadEvent.target!.result as string }));
-                              triggerNotification('تم رفع ومعالجة صورة الغلاف بنجاح!', 'success');
+                              const img = new Image();
+                              img.onload = () => {
+                                // Max size dimensions (keep it small for database efficiency)
+                                const MAX_WIDTH = 400;
+                                const MAX_HEIGHT = 600;
+                                
+                                let width = img.width;
+                                let height = img.height;
+                                
+                                if (width > MAX_WIDTH) {
+                                  height *= MAX_WIDTH / width;
+                                  width = MAX_WIDTH;
+                                }
+                                if (height > MAX_HEIGHT) {
+                                  width *= MAX_HEIGHT / height;
+                                  height = MAX_HEIGHT;
+                                }
+                                
+                                const canvas = document.createElement('canvas');
+                                canvas.width = width;
+                                canvas.height = height;
+                                
+                                const ctx = canvas.getContext('2d');
+                                if (ctx) {
+                                  ctx.drawImage(img, 0, 0, width, height);
+                                  // Export as small JPEG with 0.6 quality (typically 15-35KB instead of MBs!)
+                                  const compressedUrl = canvas.toDataURL('image/jpeg', 0.6);
+                                  setProjectForm(prev => ({ ...prev, imageUrl: compressedUrl }));
+                                  triggerNotification('تم رفع وضغط صورة الغلاف بنجاح!', 'success');
+                                } else {
+                                  setProjectForm(prev => ({ ...prev, imageUrl: uploadEvent.target!.result as string }));
+                                  triggerNotification('تم رفع صورة الغلاف بنجاح!', 'success');
+                                }
+                              };
+                              img.src = uploadEvent.target.result as string;
                             }
                           };
                           reader.readAsDataURL(file);
