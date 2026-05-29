@@ -12,3 +12,5 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 export const supabase = createClient(supabaseUrl || dummyUrl, supabaseAnonKey || dummyKey);
+
+export const isDemoMode = !supabaseUrl || !supabaseAnonKey;

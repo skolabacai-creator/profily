@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db, SocialChannel } from '../data/db';
+import { isDemoMode } from '../data/supabaseClient';
 import { Project } from '../types';
 import { 
   ArrowRight, Plus, Edit2, Trash2, Save, RotateCcw, 
@@ -239,6 +240,26 @@ export default function AdminPanel({ onBackToSite }: AdminPanelProps) {
 
       {/* Dashboard container */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 relative z-10 space-y-10">
+        
+        {/* Warning banner for Demo Mode */}
+        {isDemoMode && (
+          <div className="bg-amber-500/10 border border-amber-500/30 text-amber-400 p-5 rounded-2xl text-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-[0_4px_20px_rgba(245,158,11,0.05)]">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 bg-amber-500/10 rounded-xl shrink-0">
+                <AlertTriangle className="w-5 h-5 animate-pulse text-amber-400" />
+              </div>
+              <div className="space-y-0.5 text-right">
+                <h4 className="font-black text-mainhtml">وضع المعاينة النشط (Demo Mode)</h4>
+                <p className="text-xs text-subtext/80 leading-relaxed">
+                  مفاتيح الاتصال بـ Supabase غير معرّفة حالياً في إعدادات البناء لدى Cloudflare. الموقع يعمل ببيانات افتراضية محلية ولا يمكن تعديلها.
+                </p>
+              </div>
+            </div>
+            <div className="text-xs bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-lg font-mono text-center sm:text-left self-stretch sm:self-auto flex items-center justify-center">
+              Supabase Keys Missing
+            </div>
+          </div>
+        )}
         
         {/* Toast notifications */}
         {notification && (
