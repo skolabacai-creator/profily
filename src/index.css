@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand: var(--brand);
+  --color-brand-dim: var(--brand-dim);
+  --color-warmblack: var(--warmblack);
+  --color-cardbg: var(--cardbg);
+  --color-cardhover: var(--cardhover);
+  --color-border-dim: var(--border-dim);
+  --color-mainhtml: var(--mainhtml);
+  --color-subtext: var(--subtext);
+  --color-accent: var(--accent);
+  
+  --font-sans: "Noto Naskh Arabic", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+:root {
+  scroll-behavior: smooth;
+  --warmblack: #0F0F0F;
+  --cardbg: #161616;
+  --cardhover: #1e1e1e;
+  --border-dim: #222222;
+  --mainhtml: #F5F5F5;
+  --subtext: #A0A0A0;
+  --grid-color: rgba(255, 255, 255, 0.03);
+  --scrollbar-track: #0F0F0F;
+  --scrollbar-thumb: #222222;
+  --brand: #AAFF00;
+  --brand-dim: rgba(170, 255, 0, 0.15);
+  --accent: #00FFFF;
+}
+
+:root.light {
+  --warmblack: #FCFDF9;
+  --cardbg: #FFFFFF;
+  --cardhover: #F3F5F1;
+  --border-dim: #E2E6DF;
+  --mainhtml: #12160F;
+  --subtext: #4C5248;
+  --grid-color: rgba(0, 0, 0, 0.035);
+  --scrollbar-track: #FCFDF9;
+  --scrollbar-thumb: #D5DAD0;
+  --brand: #2D6E00;
+  --brand-dim: rgba(45, 110, 0, 0.08);
+  --accent: #005F9E;
+}
+
+body {
+  background-color: var(--color-warmblack);
+  color: var(--color-mainhtml);
+  font-family: "Noto Naskh Arabic", var(--font-sans);
+  overflow-x: hidden;
+  direction: rtl; /* RTL Support */
+}
+
+/* Custom scrollbar for beautiful premium UI appearance */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #AAFF00;
+}
+
+/* Selection highlight */
+::selection {
+  background-color: #AAFF00;
+  color: #0F0F0F;
+}
+
+/* Utilities */
+.text-stroke-brand {
+  -webkit-text-stroke: 1px #AAFF00;
+  color: transparent;
+}
+
+.line-through-accent {
+  position: relative;
+}
+.line-through-accent::after {
+  content: '';
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  top: 50%;
+  height: 2px;
+  background-color: #AAFF00;
+  transform: rotate(-3deg);
+}
+
+.sparkle-grid {
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, var(--grid-color, rgba(255, 255, 255, 0.03)) 1px, transparent 1px),
+                    linear-gradient(to bottom, var(--grid-color, rgba(255, 255, 255, 0.03)) 1px, transparent 1px);
+}
+
