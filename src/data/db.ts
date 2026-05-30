@@ -73,9 +73,9 @@ export const db = {
         .insert([newProject]);
 
       if (error) throw error;
-    } catch (e) {
+    } catch (e: any) {
       console.error('Error adding project to Supabase:', e);
-      alert('🚨 فشل الاتصال بقاعدة البيانات السحابية. تم إرسال الطلب ولكن قد لا يُحفظ على الإنترنت.');
+      alert(`🚨 فشل إضافة المشروع في قاعدة البيانات السحابية: ${e?.message || e?.details || JSON.stringify(e)}`);
     }
     
     window.dispatchEvent(new Event('portfolio_db_update'));
@@ -94,9 +94,9 @@ export const db = {
       if (error) throw error;
       window.dispatchEvent(new Event('portfolio_db_update'));
       return data && data.length > 0 ? data[0] : null;
-    } catch (e) {
+    } catch (e: any) {
       console.error('Error updating project in Supabase:', e);
-      alert('🚨 فشل تعديل المشروع في قاعدة البيانات السحابية.');
+      alert(`🚨 فشل تعديل المشروع في قاعدة البيانات السحابية: ${e?.message || e?.details || JSON.stringify(e)}`);
       return null;
     }
   },
@@ -112,9 +112,9 @@ export const db = {
       if (error) throw error;
       window.dispatchEvent(new Event('portfolio_db_update'));
       return true;
-    } catch (e) {
+    } catch (e: any) {
       console.error('Error deleting project in Supabase:', e);
-      alert('🚨 فشل حذف المشروع من قاعدة البيانات السحابية.');
+      alert(`🚨 فشل حذف المشروع من قاعدة البيانات السحابية: ${e?.message || e?.details || JSON.stringify(e)}`);
       return false;
     }
   },
@@ -148,9 +148,9 @@ export const db = {
       if (error) throw error;
       window.dispatchEvent(new Event('portfolio_db_update'));
       return data && data.length > 0 ? data[0] : null;
-    } catch (e) {
+    } catch (e: any) {
       console.error('Error updating social in Supabase:', e);
-      alert('🚨 فشل تعديل قناة التواصل في قاعدة البيانات السحابية.');
+      alert(`🚨 فشل تعديل قناة التواصل في قاعدة البيانات السحابية: ${e?.message || e?.details || JSON.stringify(e)}`);
       return null;
     }
   },
